@@ -1,0 +1,22 @@
+services:
+    php-fpm:
+        build:
+          context: gses-crypto-rate-mail-sender
+          dockerfile: docker/fpm/Dockerfile
+        volumes:
+          - ./:/usr/src/app
+    nginx:
+        build:
+          context: gses-crypto-rate-mail-sender
+          dockerfile: docker/nginx/Dockerfile
+        volumes:
+          - ./:/usr/src/app
+        ports:
+          - 4501:80
+        depends_on:
+          - php-fpm
+    mailer:
+        image: schickling/mailcatcher
+        ports:
+          - 1025
+          - 32770:1080
