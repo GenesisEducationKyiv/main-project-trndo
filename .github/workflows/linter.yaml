@@ -1,5 +1,5 @@
 # *Extra task hw1
-name: Symfony
+name: Linter
 
 on: [push, pull_request]
 
