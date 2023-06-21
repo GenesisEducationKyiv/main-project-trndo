@@ -1,13 +1,13 @@
 services:
     php-fpm:
         build:
-          context: gses-crypto-rate-mail-sender
+          context: .
           dockerfile: docker/fpm/Dockerfile
         volumes:
           - ./:/usr/src/app
     nginx:
         build:
-          context: gses-crypto-rate-mail-sender
+          context: .
           dockerfile: docker/nginx/Dockerfile
         volumes:
           - ./:/usr/src/app
