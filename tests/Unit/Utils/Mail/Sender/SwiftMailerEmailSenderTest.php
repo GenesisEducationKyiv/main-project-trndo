@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace src\Utils\Mail\Sender;
+namespace App\Tests\Unit\Utils\Mail\Sender;
 
 use App\Utils\Mail\Sender\SwiftMailerEmailSender;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +34,6 @@ class SwiftMailerEmailSenderTest extends TestCase
     public function testSendLogsErrorIfExceptionThrown(): void
     {
         $message = new Email();
-
         $exceptionMessage = 'An error occurred';
 
         $this->mailer->expects($this->once())

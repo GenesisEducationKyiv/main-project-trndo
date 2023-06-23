@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Utils\CurrencyRateComparator\Comparator;
+namespace App\Tests\Unit\Utils\CurrencyRateComparator\Comparator;
 
 use App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator;
 use App\Utils\CurrencyRateComparator\Currency;
@@ -33,7 +33,7 @@ class CoinGateCurrencyRateComparatorTest extends TestCase
 
         $result = $this->rateComparator->compare(Currency::BTC, Currency::UAH);
 
-        $this->assertSame($rate, $result);
+        self::assertSame($rate, $result);
     }
 
     public function testCompareThrowsBadRequestHttpException(): void

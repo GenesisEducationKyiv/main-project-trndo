@@ -2,37 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Subscription\DataProvider;
+namespace App\Tests\Unit\Utils\Subscription\DataProvider;
 
+use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\FileReader;
 use App\Utils\Subscription\DataProvider\TxtSubscriptionDataProvider;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
-class TxtSubscriptionDataProviderTest extends TestCase
+class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
 {
     private const EMAILS = ['email1@example.com', 'email2@example.com', 'email3@example.com'];
     private const FILE_NAME = 'emails.txt';
 
-    private string $tempDirectory;
     private TxtSubscriptionDataProvider $txtDataProvider;
 
     protected function setUp(): void
     {
-        $filesystem = new Filesystem();
-        $this->tempDirectory = sys_get_temp_dir().'/txt_data_provider_test';
-        $filesystem->mkdir($this->tempDirectory);
+        parent::setUp();
 
         $logger = $this->createMock(LoggerInterface::class);
-        $fileReader = new FileReader($this->tempDirectory, $filesystem, $logger);
+        $fileReader = new FileReader($this->tempDirectory, $this->filesystem, $logger);
         $this->txtDataProvider = new TxtSubscriptionDataProvider($fileReader);
-    }
-
-    protected function tearDown(): void
-    {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->tempDirectory);
     }
 
     public function testGetAllReturnsEmptyArrayIfFileNotExists(): void

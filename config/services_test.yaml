@@ -1,0 +1,17 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true
+
+
+    App\Utils\FileSystem\FileWriter:
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Utils\FileSystem\FileReader:
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparator: ~
+    App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface: '@App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparator'

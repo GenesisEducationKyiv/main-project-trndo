@@ -2,37 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Subscription\DataPersister;
+namespace App\Tests\Unit\Utils\Subscription\DataPersister;
 
+use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\FileWriter;
 use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
 use App\Utils\Subscription\Persister\TxtSubscriptionDataPersister;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
-class TxtSubscriptionDataPersisterTest extends TestCase
+class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
 {
-    private string $tempDirectory;
+    private const FILE_NAME = 'emails.txt';
+
     private TxtSubscriptionDataPersister $txtDataPersister;
     private SubscriptionDataProviderInterface $dataProvider;
 
     protected function setUp(): void
     {
-        $filesystem = new Filesystem();
-        $this->tempDirectory = sys_get_temp_dir().'/txt_data_persister_test';
-        $filesystem->mkdir($this->tempDirectory);
+        parent::setUp();
 
         $logger = $this->createMock(LoggerInterface::class);
-        $fileWriter = new FileWriter($this->tempDirectory, new Filesystem(), $logger);
+        $fileWriter = new FileWriter($this->tempDirectory, $this->filesystem, $logger);
         $this->dataProvider = $this->createMock(SubscriptionDataProviderInterface::class);
         $this->txtDataPersister = new TxtSubscriptionDataPersister($fileWriter, $this->dataProvider);
-    }
-
-    protected function tearDown(): void
-    {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->tempDirectory);
     }
 
     public function testStoreReturnsFalseIfEmailExists(): void
@@ -42,7 +34,7 @@ class TxtSubscriptionDataPersisterTest extends TestCase
 
         $result = $this->txtDataPersister->store($email);
 
-        $this->assertFalse($result);
+        self::assertFalse($result);
     }
 
     public function testStoreReturnsTrueAndAppendsEmailToFileIfEmailDoesNotExist(): void
@@ -52,10 +44,10 @@ class TxtSubscriptionDataPersisterTest extends TestCase
 
         $result = $this->txtDataPersister->store($email);
 
-        $this->assertTrue($result);
-        $this->assertSame(
+        self::assertTrue($result);
+        self::assertSame(
             $email.',',
-            file_get_contents($this->tempDirectory.'/emails.txt')
+            file_get_contents($this->tempDirectory.'/'.self::FILE_NAME)
         );
     }
 }
