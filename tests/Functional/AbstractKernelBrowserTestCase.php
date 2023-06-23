@@ -13,7 +13,7 @@ class AbstractKernelBrowserTestCase extends WebTestCase
 
     protected function setUp(): void
     {
-        if (!self::$booted) {
+        if ( ! self::$booted) {
             self::$client = self::createClient();
         }
     }
