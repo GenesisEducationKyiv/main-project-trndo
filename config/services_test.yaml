@@ -4,7 +4,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true
 
-
     App\Utils\FileSystem\FileWriter:
         arguments:
             - "%kernel.project_dir%/test_system"
