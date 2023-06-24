@@ -24,15 +24,10 @@ class FileReader
             return null;
         }
 
-        try {
-            $contents = file_get_contents($filePath);
+        $contents = file_get_contents($filePath);
 
-            if ( ! $contents) {
-                return null;
-            }
-        } catch (\Throwable $exception) {
-            $this->logger->info('Error while reading file '.$filePath.'Message: '.$exception->getMessage());
-            throw new \InvalidArgumentException('An error occurred while reading the file');
+        if ( ! $contents) {
+            return null;
         }
 
         return $contents;

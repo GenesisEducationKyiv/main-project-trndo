@@ -8,5 +8,5 @@ interface SubscriptionDataProviderInterface
 {
     public function getAll(): array;
 
-    public function ifEmailExists(string $email): bool;
+    public function emailExists(string $email): bool;
 }
