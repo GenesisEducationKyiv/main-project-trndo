@@ -42,11 +42,11 @@ class TxtSubscriptionDataProviderTest extends TestCase
         $this->assertEmpty($emails);
     }
 
-    public function testIfEmailExistsReturnsFalseIfEmailNotExists(): void
+    public function testEmailExistsReturnsFalseIfEmailNotExists(): void
     {
         $email = 'non_existent_email@example.com';
 
-        $exists = $this->txtDataProvider->ifEmailExists($email);
+        $exists = $this->txtDataProvider->emailExists($email);
 
         $this->assertFalse($exists);
     }
@@ -63,7 +63,7 @@ class TxtSubscriptionDataProviderTest extends TestCase
         $this->assertSame(self::EMAILS, $emails);
     }
 
-    public function testIfEmailExistsReturnsTrueIfEmailExists(): void
+    public function testEmailExistsReturnsTrueEmailExists(): void
     {
         $fileName = 'emails.txt';
         $content = implode(',', self::EMAILS);
@@ -72,7 +72,7 @@ class TxtSubscriptionDataProviderTest extends TestCase
 
         $email = 'email2@example.com';
 
-        $exists = $this->txtDataProvider->ifEmailExists($email);
+        $exists = $this->txtDataProvider->emailExists($email);
 
         $this->assertTrue($exists);
     }
