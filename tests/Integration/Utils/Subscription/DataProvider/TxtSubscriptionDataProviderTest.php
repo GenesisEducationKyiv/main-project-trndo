@@ -29,7 +29,7 @@ class TxtSubscriptionDataProviderTest extends AbstractFileSystemKernelTestCase
 
         $txtSubscriptionProvider = self::getContainer()->get(TxtSubscriptionDataProvider::class);
 
-        $this->assertTrue($txtSubscriptionProvider->ifEmailExists($email));
+        $this->assertTrue($txtSubscriptionProvider->emailExists($email));
     }
 
     public function testIsEmailIsExistsInFileReturnsFalse(): void
@@ -38,7 +38,7 @@ class TxtSubscriptionDataProviderTest extends AbstractFileSystemKernelTestCase
 
         $txtSubscriptionProvider = self::getContainer()->get(TxtSubscriptionDataProvider::class);
 
-        $this->assertFalse($txtSubscriptionProvider->ifEmailExists($email));
+        $this->assertFalse($txtSubscriptionProvider->emailExists($email));
     }
 
     public function testReadSubscriptionDataFromNotExistingFile(): void

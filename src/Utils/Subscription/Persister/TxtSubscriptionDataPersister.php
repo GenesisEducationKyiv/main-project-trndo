@@ -17,7 +17,7 @@ class TxtSubscriptionDataPersister implements SubscriptionDataPersisterInterface
 
     public function store(string $email): bool
     {
-        if ($this->dataProvider->ifEmailExists($email)) {
+        if ($this->dataProvider->emailExists($email)) {
             return false;
         }
 

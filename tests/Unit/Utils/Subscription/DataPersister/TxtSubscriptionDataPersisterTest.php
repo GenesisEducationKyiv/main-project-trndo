@@ -27,20 +27,20 @@ class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
         $this->txtDataPersister = new TxtSubscriptionDataPersister($fileWriter, $this->dataProvider);
     }
 
-    public function testStoreReturnsFalseIfEmailExists(): void
+    public function testStoreReturnsFalseEmailExists(): void
     {
         $email = 'existing_email@example.com';
-        $this->dataProvider->expects($this->once())->method('ifEmailExists')->willReturn(true);
+        $this->dataProvider->expects($this->once())->method('emailExists')->willReturn(true);
 
         $result = $this->txtDataPersister->store($email);
 
         self::assertFalse($result);
     }
 
-    public function testStoreReturnsTrueAndAppendsEmailToFileIfEmailDoesNotExist(): void
+    public function testStoreReturnsTrueAndAppendsEmailToFileEmailDoesNotExist(): void
     {
         $email = 'new_email@example.com';
-        $this->dataProvider->expects($this->once())->method('ifEmailExists')->willReturn(false);
+        $this->dataProvider->expects($this->once())->method('emailExists')->willReturn(false);
 
         $result = $this->txtDataPersister->store($email);
 

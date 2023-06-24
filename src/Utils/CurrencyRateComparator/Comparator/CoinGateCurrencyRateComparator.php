@@ -6,9 +6,8 @@ namespace App\Utils\CurrencyRateComparator\Comparator;
 
 use App\Utils\CurrencyRateComparator\Currency;
 use App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface;
+use App\Utils\Exception\ApiRequestException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
@@ -30,7 +29,7 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
 
             $result = json_decode($response->getContent(), true);
         } catch (\Throwable $e) {
-            throw new BadRequestHttpException(message: $e->getMessage(), code: Response::HTTP_BAD_REQUEST);
+            throw new ApiRequestException(message: $e->getMessage());
         }
 
         return (float) $result;

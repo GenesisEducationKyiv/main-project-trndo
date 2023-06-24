@@ -6,11 +6,11 @@ namespace App\Tests\Unit\Utils\CurrencyRateComparator\Comparator;
 
 use App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator;
 use App\Utils\CurrencyRateComparator\Currency;
+use App\Utils\Exception\ApiRequestException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class CoinGateCurrencyRateComparatorTest extends TestCase
 {
@@ -43,7 +43,7 @@ class CoinGateCurrencyRateComparatorTest extends TestCase
         $mockResponse = new MockResponse([new \Exception($errorMessage)]);
         $this->httpClient->setResponseFactory($mockResponse);
 
-        $this->expectException(BadRequestHttpException::class);
+        $this->expectException(ApiRequestException::class);
         $this->expectExceptionCode(Response::HTTP_BAD_REQUEST);
         $this->expectExceptionMessage($errorMessage);
 

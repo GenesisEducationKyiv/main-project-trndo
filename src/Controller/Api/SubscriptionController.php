@@ -38,17 +38,11 @@ class SubscriptionController
 
         $isStored = $this->dataPersister->store($email);
 
-        return $isStored
-            ? new JsonResponse(
-                [
-                    'message' => 'Email was added',
-                ],
-            )
-            : new JsonResponse(
-                [
-                    'message' => 'Email is already added',
-                ],
-                Response::HTTP_CONFLICT
-            );
+        return new JsonResponse(
+            [
+                'message' => $isStored ? 'Email was added' : 'Email is already added',
+            ],
+            $isStored ? Response::HTTP_OK : Response::HTTP_CONFLICT
+        );
     }
 }

@@ -20,7 +20,7 @@ class TxtSubscriptionDataProvider implements SubscriptionDataProviderInterface
         return $content ? explode(',', rtrim($content, ',')) : [];
     }
 
-    public function ifEmailExists(string $email): bool
+    public function emailExists(string $email): bool
     {
         $content = $this->getAll();
 
