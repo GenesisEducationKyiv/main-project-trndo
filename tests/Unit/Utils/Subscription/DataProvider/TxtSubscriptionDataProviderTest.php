@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Utils\Subscription\DataProvider;
 
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
-use App\Utils\FileSystem\Reader\FileReader;
 use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
 use App\Utils\Subscription\DataProvider\TxtSubscriptionDataProvider;
-use Psr\Log\LoggerInterface;
 
 class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
 {

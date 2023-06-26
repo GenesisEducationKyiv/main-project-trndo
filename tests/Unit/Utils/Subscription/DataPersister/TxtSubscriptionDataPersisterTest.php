@@ -6,10 +6,8 @@ namespace App\Tests\Unit\Utils\Subscription\DataPersister;
 
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
-use App\Utils\FileSystem\Writer\FileWriter;
 use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
 use App\Utils\Subscription\Persister\TxtSubscriptionDataPersister;
-use Psr\Log\LoggerInterface;
 
 class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
 {
