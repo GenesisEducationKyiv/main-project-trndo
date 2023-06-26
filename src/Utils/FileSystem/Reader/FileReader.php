@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Utils\FileSystem;
+namespace App\Utils\FileSystem\Reader;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class FileReader
+class FileReader implements FileSystemReaderInterface
 {
     public function __construct(
         private string $directory,
         private Filesystem $filesystem,
-        private LoggerInterface $logger,
     ) {
     }
 
