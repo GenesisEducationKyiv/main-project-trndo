@@ -5,65 +5,70 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Utils\Subscription\DataProvider;
 
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
-use App\Utils\FileSystem\FileReader;
+use App\Utils\FileSystem\Reader\FileReader;
+use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
 use App\Utils\Subscription\DataProvider\TxtSubscriptionDataProvider;
 use Psr\Log\LoggerInterface;
 
 class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
 {
     private const EMAILS = ['email1@example.com', 'email2@example.com', 'email3@example.com'];
-    private const FILE_NAME = 'emails.txt';
 
     private TxtSubscriptionDataProvider $txtDataProvider;
+    private FileSystemReaderInterface $fileSystemReader;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $logger = $this->createMock(LoggerInterface::class);
-        $fileReader = new FileReader($this->tempDirectory, $this->filesystem, $logger);
-        $this->txtDataProvider = new TxtSubscriptionDataProvider($fileReader);
+        $this->fileSystemReader = $this->createMock(FileSystemReaderInterface::class);
+        $this->txtDataProvider = new TxtSubscriptionDataProvider($this->fileSystemReader);
     }
 
     public function testGetAllReturnsEmptyArrayIfFileNotExists(): void
     {
+        $this->fileSystemReader->expects($this->once())->method('getContents')->willReturn(null);
+
         $emails = $this->txtDataProvider->getAll();
 
-        $this->assertEmpty($emails);
+        self::assertEmpty($emails);
+    }
+
+    public function testGetAllReturnsEmailsArrayFromFileContents(): void
+    {
+        $this->fileSystemReader->expects($this->once())->method('getContents')->willReturn(
+            $this->getEmailsAsString()
+        );
+
+        $emails = $this->txtDataProvider->getAll();
+
+        self::assertSame(self::EMAILS, $emails);
     }
 
     public function testEmailExistsReturnsFalseIfEmailNotExists(): void
     {
         $email = 'non_existent_email@example.com';
+        $this->fileSystemReader->expects($this->once())->method('getContents')->willReturn(
+            $this->getEmailsAsString()
+        );
 
         $exists = $this->txtDataProvider->emailExists($email);
 
-        $this->assertFalse($exists);
-    }
-
-    public function testGetAllReturnsEmailsArrayFromFileContents(): void
-    {
-        $fileName = self::FILE_NAME;
-        $content = implode(',', self::EMAILS);
-        $filePath = $this->tempDirectory.'/'.$fileName;
-        file_put_contents($filePath, $content);
-
-        $emails = $this->txtDataProvider->getAll();
-
-        $this->assertSame(self::EMAILS, $emails);
+        self::assertFalse($exists);
     }
 
     public function testEmailExistsReturnsTrueEmailExists(): void
     {
-        $fileName = 'emails.txt';
-        $content = implode(',', self::EMAILS);
-        $filePath = $this->tempDirectory.'/'.$fileName;
-        file_put_contents($filePath, $content);
-
         $email = 'email2@example.com';
+        $this->fileSystemReader->expects($this->once())->method('getContents')->willReturn($email);
 
         $exists = $this->txtDataProvider->emailExists($email);
 
-        $this->assertTrue($exists);
+        self::assertTrue($exists);
+    }
+
+    private function getEmailsAsString(): string
+    {
+        return implode(',', self::EMAILS);
     }
 }

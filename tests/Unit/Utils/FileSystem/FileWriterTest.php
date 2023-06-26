@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Utils\FileSystem;
 
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
-use App\Utils\FileSystem\FileWriter;
+use App\Utils\FileSystem\Writer\FileWriter;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;

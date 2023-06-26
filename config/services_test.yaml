@@ -4,11 +4,13 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true
 
-    App\Utils\FileSystem\FileWriter:
+    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
+        class: App\Utils\FileSystem\Writer\FileWriter
         arguments:
             - "%kernel.project_dir%/test_system"
 
-    App\Utils\FileSystem\FileReader:
+    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
+        class: App\Utils\FileSystem\Reader\FileReader
         arguments:
             - "%kernel.project_dir%/test_system"
 
