@@ -7,7 +7,6 @@ namespace App\Tests\Unit\Utils\FileSystem;
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Reader\FileReader;
 
-
 class FileReaderTest extends AbstractFileSystemTestCase
 {
     private FileReader $fileReader;
