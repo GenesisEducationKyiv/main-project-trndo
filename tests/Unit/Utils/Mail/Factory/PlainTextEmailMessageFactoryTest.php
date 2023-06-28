@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace src\Utils\Mail\Factory;
+namespace App\Tests\Unit\Utils\Mail\Factory;
 
 use App\Utils\Mail\Factory\PlainTextEmailMessageFactory;
 use PHPUnit\Framework\TestCase;
@@ -28,9 +28,9 @@ class PlainTextEmailMessageFactoryTest extends TestCase
 
         $email = $this->emailFactory->create($to, $body, $from);
 
-        $this->assertSame($to, $email->getTo()[0]->getAddress());
-        $this->assertSame($from, $email->getFrom()[0]->getAddress());
-        $this->assertSame($body, $email->getTextBody());
+        self::assertSame($to, $email->getTo()[0]->getAddress());
+        self::assertSame($from, $email->getFrom()[0]->getAddress());
+        self::assertSame($body, $email->getTextBody());
     }
 
     public function testCreateWithMultipleEmailAddresses(): void
@@ -46,9 +46,9 @@ class PlainTextEmailMessageFactoryTest extends TestCase
 
         $email = $this->emailFactory->create($to, $body);
 
-        $this->assertSame($to, array_map(fn (Address $a) => $a->getAddress(), $email->getTo()));
-        $this->assertSame($defaultFrom, $email->getFrom()[0]->getAddress());
-        $this->assertSame($body, $email->getTextBody());
+        self::assertSame($to, array_map(fn (Address $a) => $a->getAddress(), $email->getTo()));
+        self::assertSame($defaultFrom, $email->getFrom()[0]->getAddress());
+        self::assertSame($body, $email->getTextBody());
     }
 
     public function testCreateWithDefaultFromEmailAddress(): void
@@ -64,8 +64,8 @@ class PlainTextEmailMessageFactoryTest extends TestCase
 
         $email = $this->emailFactory->create($to, $body);
 
-        $this->assertSame($to, $email->getTo()[0]->getAddress());
-        $this->assertSame($defaultFrom, $email->getFrom()[0]->getAddress());
-        $this->assertSame($body, $email->getTextBody());
+        self::assertSame($to, $email->getTo()[0]->getAddress());
+        self::assertSame($defaultFrom, $email->getFrom()[0]->getAddress());
+        self::assertSame($body, $email->getTextBody());
     }
 }

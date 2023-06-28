@@ -2,37 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Utils\FileSystem;
+namespace App\Tests\Unit\Utils\FileSystem;
 
+use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\FileReader;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
-class FileReaderTest extends TestCase
+class FileReaderTest extends AbstractFileSystemTestCase
 {
     private FileReader $fileReader;
-    private string $tempDirectory;
-
-    private Filesystem $filesystem;
-
     private LoggerInterface $logger;
 
     protected function setUp(): void
     {
-        $this->filesystem = new Filesystem();
-        $this->tempDirectory = sys_get_temp_dir().'/file_reader_test';
-        $this->filesystem->mkdir($this->tempDirectory);
+        parent::setUp();
 
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->fileReader = new FileReader($this->tempDirectory, $this->filesystem, $this->logger);
         $this->filesystem->mkdir($this->tempDirectory);
-    }
-
-    protected function tearDown(): void
-    {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->tempDirectory);
     }
 
     public function testGetContentsReturnsFileContents(): void
@@ -44,7 +31,7 @@ class FileReaderTest extends TestCase
 
         $contents = $this->fileReader->getContents($fileName);
 
-        $this->assertSame($fileContents, $contents);
+        self::assertSame($fileContents, $contents);
     }
 
     public function testGetContentsReturnsNullIfFileDoesNotExist(): void
@@ -53,6 +40,6 @@ class FileReaderTest extends TestCase
 
         $contents = $this->fileReader->getContents($fileName);
 
-        $this->assertNull($contents);
+        self::assertNull($contents);
     }
 }

@@ -8,7 +8,8 @@
 /var/
 /vendor/
 .idea/
-system/.gitkeep
+system/*
+test_system/`
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

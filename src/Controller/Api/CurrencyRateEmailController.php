@@ -32,7 +32,7 @@ class CurrencyRateEmailController
         if (empty($subscribers)) {
             return new JsonResponse(
                 [
-                    'Emails were not found!',
+                    'message' => 'Emails were not found!',
                 ],
                 Response::HTTP_NOT_FOUND
             );
