@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller\Api;
 
 use App\Tests\Functional\AbstractApiTestCase;
-use App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorHandler;
+use App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain;
 use Symfony\Component\HttpFoundation\Response;
 
 class CurrencyRateControllerTest extends AbstractApiTestCase
@@ -13,7 +13,7 @@ class CurrencyRateControllerTest extends AbstractApiTestCase
     public function testExpects200(): void
     {
         $rate = 999123.23;
-        $comparator = self::getContainer()->get(TestCurrencyRateComparatorHandler::class);
+        $comparator = self::getContainer()->get(TestCurrencyRateComparatorChain::class);
 
         $comparator->expected = $rate;
 

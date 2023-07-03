@@ -39,7 +39,7 @@ class CurrencyRateComparatorChainTest extends TestCase
 
         $result = $handler->compare(Currency::BTC, Currency::UAH);
 
-        $this->assertEquals($rate, $result);
+        $this->assertSame($rate, $result);
     }
 
     /**
@@ -63,7 +63,7 @@ class CurrencyRateComparatorChainTest extends TestCase
 
         $result = $handler->compare(Currency::BTC, Currency::UAH);
 
-        $this->assertEquals($rate, $result);
+        $this->assertSame($rate, $result);
     }
 
     /**
@@ -88,7 +88,7 @@ class CurrencyRateComparatorChainTest extends TestCase
         yield [
             CoinGateCurrencyRateComparatorHandler::class,
             CoinGateCurrencyRateComparator::class,
-            979094.38
+            979094.38,
         ];
         yield [
             CoinGeckoCurrencyRateComparatorHandler::class,

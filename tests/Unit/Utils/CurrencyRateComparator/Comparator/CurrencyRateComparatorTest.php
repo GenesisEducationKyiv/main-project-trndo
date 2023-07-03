@@ -80,7 +80,7 @@ class CurrencyRateComparatorTest extends TestCase
         yield [
             CoinGateCurrencyRateComparator::class,
             new MockResponse(json_encode(979094.38)),
-            979094.38
+            979094.38,
         ];
         yield [
             CoinGeckoCurrencyRateComparator::class,

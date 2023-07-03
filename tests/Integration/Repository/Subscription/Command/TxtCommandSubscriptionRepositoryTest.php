@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Repository\Subscription\Command;
 
 use App\Repository\Subsciption\Command\TxtCommandSubscriptionRepository;
