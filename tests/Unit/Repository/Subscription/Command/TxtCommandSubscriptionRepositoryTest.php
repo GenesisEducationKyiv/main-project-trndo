@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Repository\Subscription\DataPersister;
+namespace App\Tests\Unit\Repository\Subscription\Command;
 
 use App\Repository\Subsciption\Command\TxtCommandSubscriptionRepository;
 use App\Repository\Subsciption\Query\QuerySubscriptionRepositoryInterface;
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
 
-class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
+class TxtCommandSubscriptionRepositoryTest extends AbstractFileSystemTestCase
 {
     private const FILE_NAME = 'emails.txt';
 

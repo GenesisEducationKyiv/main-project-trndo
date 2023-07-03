@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Utils\CurrencyRateComparator;
 
 use App\Utils\CurrencyRateComparator\Currency;
-use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
+use App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface;
 
-class TestCurrencyRateComparatorChain implements CurrencyRateComparatorChainInterface
+class TestCurrencyRateComparator implements CurrencyRateComparatorInterface
 {
     public function __construct(
         public float $expected = 0.0

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Repository\Subscription\DataProvider;
+namespace App\Tests\Unit\Repository\Subscription\Query;
 
 use App\Repository\Subsciption\Query\TxtQuerySubscriptionRepository;
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
 
-class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
+class TxtQuerySubscriptionRepositoryTest extends AbstractFileSystemTestCase
 {
     private const EMAILS = ['email1@example.com', 'email2@example.com', 'email3@example.com'];
 

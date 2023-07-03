@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Utils\CurrencyRateComparator\Comparator;
 
-use App\Tests\Unit\Utils\Http\TestMockHttpClient;
 use App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator;
 use App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator;
 use App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator;
@@ -15,11 +14,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CoinGateCurrencyRateComparatorTest extends TestCase
+class CurrencyRateComparatorTest extends TestCase
 {
     protected MockHttpClient $httpClient;
+
     protected function setUp(): void
     {
         $this->httpClient = new MockHttpClient();
