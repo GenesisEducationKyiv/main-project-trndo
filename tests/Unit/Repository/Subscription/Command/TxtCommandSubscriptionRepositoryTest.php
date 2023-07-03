@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Utils\Subscription\DataPersister;
+namespace App\Tests\Unit\Repository\Subscription\DataPersister;
 
+use App\Repository\Subsciption\Command\TxtCommandSubscriptionRepository;
+use App\Repository\Subsciption\Query\QuerySubscriptionRepositoryInterface;
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
-use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
-use App\Utils\Subscription\Persister\TxtSubscriptionDataPersister;
 
 class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
 {
     private const FILE_NAME = 'emails.txt';
 
-    private TxtSubscriptionDataPersister $txtDataPersister;
-    private SubscriptionDataProviderInterface $dataProvider;
+    private TxtCommandSubscriptionRepository $txtDataPersister;
+    private QuerySubscriptionRepositoryInterface $dataProvider;
     private FileSystemWriterInterface $fileSystemWriter;
 
     protected function setUp(): void
@@ -22,8 +22,8 @@ class TxtSubscriptionDataPersisterTest extends AbstractFileSystemTestCase
         parent::setUp();
 
         $this->fileSystemWriter = $this->createMock(FileSystemWriterInterface::class);
-        $this->dataProvider = $this->createMock(SubscriptionDataProviderInterface::class);
-        $this->txtDataPersister = new TxtSubscriptionDataPersister($this->fileSystemWriter, $this->dataProvider);
+        $this->dataProvider = $this->createMock(QuerySubscriptionRepositoryInterface::class);
+        $this->txtDataPersister = new TxtCommandSubscriptionRepository($this->fileSystemWriter, $this->dataProvider);
     }
 
     public function testStoreReturnsFalseEmailExists(): void

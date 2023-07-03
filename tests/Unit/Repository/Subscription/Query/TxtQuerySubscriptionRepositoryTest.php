@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Utils\Subscription\DataProvider;
+namespace App\Tests\Unit\Repository\Subscription\DataProvider;
 
+use App\Repository\Subsciption\Query\TxtQuerySubscriptionRepository;
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
 use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
-use App\Utils\Subscription\DataProvider\TxtSubscriptionDataProvider;
 
 class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
 {
     private const EMAILS = ['email1@example.com', 'email2@example.com', 'email3@example.com'];
 
-    private TxtSubscriptionDataProvider $txtDataProvider;
+    private TxtQuerySubscriptionRepository $txtDataProvider;
     private FileSystemReaderInterface $fileSystemReader;
 
     protected function setUp(): void
@@ -20,7 +20,7 @@ class TxtSubscriptionDataProviderTest extends AbstractFileSystemTestCase
         parent::setUp();
 
         $this->fileSystemReader = $this->createMock(FileSystemReaderInterface::class);
-        $this->txtDataProvider = new TxtSubscriptionDataProvider($this->fileSystemReader);
+        $this->txtDataProvider = new TxtQuerySubscriptionRepository($this->fileSystemReader);
     }
 
     public function testGetAllReturnsEmptyArrayIfFileNotExists(): void

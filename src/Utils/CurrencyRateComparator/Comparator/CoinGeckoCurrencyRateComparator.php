@@ -10,21 +10,27 @@ use App\Utils\Exception\ApiRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
+class CoinGeckoCurrencyRateComparator implements CurrencyRateComparatorInterface
 {
-    private const REQUEST_URL = 'https://api.coingate.com/api/v2/rates/merchant/%s/%s';
+    private const REQUEST_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=%s&vs_currencies=%s';
 
     public function __construct(
         private HttpClientInterface $httpClient
     ) {
     }
 
+    /**
+     * @throws ApiRequestException
+     */
     public function compare(Currency $from, Currency $to): ?float
     {
+        $currencyId = strtolower($from->getFullName());
+        $quotedCurrency = strtolower($to->value);
+
         try {
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
-                sprintf(self::REQUEST_URL, $from->value, $to->value)
+                sprintf(self::REQUEST_URL, $currencyId, $quotedCurrency)
             );
 
             $result = json_decode($response->getContent(), true);
@@ -32,6 +38,8 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        return !empty($result) ? (float) $result : null;
+        return !empty($result[$currencyId][$quotedCurrency])
+            ? $result[$currencyId][$quotedCurrency]
+            : null;
     }
 }

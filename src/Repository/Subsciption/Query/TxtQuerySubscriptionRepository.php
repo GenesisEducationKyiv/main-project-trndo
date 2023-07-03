@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Utils\Subscription\DataProvider;
+namespace App\Repository\Subsciption\Query;
 
 use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
 
-class TxtSubscriptionDataProvider implements SubscriptionDataProviderInterface
+class TxtQuerySubscriptionRepository implements QuerySubscriptionRepositoryInterface
 {
     public function __construct(
         private FileSystemReaderInterface $fileReader,

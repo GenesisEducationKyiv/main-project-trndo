@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Utils\Subscription\Persister\SubscriptionDataPersisterInterface;
+use App\Repository\Subsciption\Command\CommandSubscriptionRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SubscriptionController
 {
     public function __construct(
-        private SubscriptionDataPersisterInterface $dataPersister,
+        private CommandSubscriptionRepositoryInterface $commandRepository,
     ) {
     }
 
@@ -36,7 +36,7 @@ class SubscriptionController
             );
         }
 
-        $isStored = $this->dataPersister->store($email);
+        $isStored = $this->commandRepository->store($email);
 
         return new JsonResponse(
             [

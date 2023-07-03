@@ -10,9 +10,9 @@ use App\Utils\Exception\ApiRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
+class CryptoCompareCurrencyRateComparator implements CurrencyRateComparatorInterface
 {
-    private const REQUEST_URL = 'https://api.coingate.com/api/v2/rates/merchant/%s/%s';
+    private const REQUEST_URL = 'https://min-api.cryptocompare.com/data/price?fsym=%s&tsyms=%s';
 
     public function __construct(
         private HttpClientInterface $httpClient
@@ -28,10 +28,10 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
             );
 
             $result = json_decode($response->getContent(), true);
-        } catch (\Throwable $e) {
+        }  catch (\Throwable $e) {
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        return !empty($result) ? (float) $result : null;
+        return !empty($result[$to->value]) ? (float) $result[$to->value] : null;
     }
 }

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Utils\Subscription\Persister;
+namespace App\Repository\Subsciption\Command;
 
+use App\Repository\Subsciption\Query\QuerySubscriptionRepositoryInterface;
 use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
-use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
 
-class TxtSubscriptionDataPersister implements SubscriptionDataPersisterInterface
+class TxtCommandSubscriptionRepository implements CommandSubscriptionRepositoryInterface
 {
     public function __construct(
         private FileSystemWriterInterface $fileWriter,
-        private SubscriptionDataProviderInterface $dataProvider
+        private QuerySubscriptionRepositoryInterface $dataProvider
     ) {
     }
 
