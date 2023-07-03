@@ -22,7 +22,8 @@ class CurrencyRateComparatorChainProviderPass implements CompilerPassInterface
 
         $handlers = array_keys($handlers);
 
-        $firstHandler = (string)array_shift($handlers);
+        /** @var string $firstHandler */
+        $firstHandler = array_shift($handlers);
         $handlerDefinition = $container->getDefinition($firstHandler);
         $container->setDefinition(CurrencyRateComparatorChainInterface::class, $handlerDefinition);
 

@@ -38,7 +38,7 @@ class CoinGeckoCurrencyRateComparator implements CurrencyRateComparatorInterface
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        return !empty($result[$currencyId][$quotedCurrency])
+        return ! empty($result[$currencyId][$quotedCurrency])
             ? $result[$currencyId][$quotedCurrency]
             : null;
     }

@@ -14,7 +14,7 @@ abstract class AbstractCurrencyRateComparatorHandler implements CurrencyRateComp
 
     public function compare(Currency $from, Currency $to): float
     {
-        if (!$this->next) {
+        if ( ! $this->next) {
             throw new ApiRequestException('Failed to fetch currency rate');
         }
 

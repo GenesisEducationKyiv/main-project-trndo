@@ -28,10 +28,10 @@ class CryptoCompareCurrencyRateComparator implements CurrencyRateComparatorInter
             );
 
             $result = json_decode($response->getContent(), true);
-        }  catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        return !empty($result[$to->value]) ? (float) $result[$to->value] : null;
+        return ! empty($result[$to->value]) ? (float) $result[$to->value] : null;
     }
 }

@@ -32,6 +32,6 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        return !empty($result) ? (float) $result : null;
+        return ! empty($result) ? (float) $result : null;
     }
 }

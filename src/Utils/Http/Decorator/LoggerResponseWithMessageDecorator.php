@@ -21,7 +21,7 @@ class LoggerResponseWithMessageDecorator implements HttpClientInterface
     public function request(string $method, string $url, array $options = []): ResponseInterface
     {
         $response = $this->httpClient->request($method, $url, $options);
-        $this->currencyProviderResponseLogger->info($this->additionalMessage . $response->getContent());
+        $this->currencyProviderResponseLogger->info($this->additionalMessage.$response->getContent());
 
         return $response;
     }

@@ -22,7 +22,7 @@ class CoinGeckoCurrencyRateComparatorHandler extends AbstractCurrencyRateCompara
         try {
             $rate = $this->coinGateComparator->compare($from, $to);
         } catch (ApiRequestException $exception) {
-            $this->logger->info('Failed request to CoinGecko provider. Message: '. $exception->getMessage());
+            $this->logger->info('Failed request to CoinGecko provider. Message: '.$exception->getMessage());
             $rate = parent::compare($from, $to);
         }
 

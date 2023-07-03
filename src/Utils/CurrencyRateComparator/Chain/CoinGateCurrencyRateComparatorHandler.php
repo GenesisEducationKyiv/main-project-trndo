@@ -22,7 +22,7 @@ class CoinGateCurrencyRateComparatorHandler extends AbstractCurrencyRateComparat
         try {
             $rate = $this->coinGateComparator->compare($from, $to);
         } catch (ApiRequestException $exception) {
-            $this->logger->info('Failed request to CoinGate provider. Message: '. $exception->getMessage());
+            $this->logger->info('Failed request to CoinGate provider. Message: '.$exception->getMessage());
             $rate = parent::compare($from, $to);
         }
 
