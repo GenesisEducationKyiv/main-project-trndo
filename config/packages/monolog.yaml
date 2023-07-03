@@ -1,6 +1,12 @@
 monolog:
-    channels:
-        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+    channels: ['currency_provider_response', 'deprecation']
+
+    handlers:
+        currency_provider_response:
+            level: debug
+            type: stream
+            path: '%kernel.logs_dir%/currency_provider_response.log'
+            channels: [ 'currency_provider_response' ]
 
 when@dev:
     monolog:

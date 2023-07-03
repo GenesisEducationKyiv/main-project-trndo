@@ -36,5 +36,47 @@ services:
         arguments:
             - "%kernel.project_dir%/system"
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # Decorator for HttpClientInterface
+    app.currency_rate_coin_gate_http_client_decorator:
+        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
+        arguments:
+            - '@http_client'
+            - '@monolog.logger.currency_provider_response'
+            - 'CoinGate - Response: '
+
+    # Decorator for HttpClientInterface
+    app.currency_rate_coin_gecko_http_client_decorator:
+        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
+        arguments:
+            - '@http_client'
+            - '@monolog.logger.currency_provider_response'
+            - 'CoinGecko - Response: '
+
+    # Decorator for HttpClientInterface
+    app.currency_crypto_compare_gate_http_client_decorator:
+        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
+        arguments:
+            - '@http_client'
+            - '@monolog.logger.currency_provider_response'
+            - 'CryptoCompare - Response: '
+
+    App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler:
+        tags: [ 'app.currency_rate_handler' ]
+
+    App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler:
+        tags: [ 'app.currency_rate_handler' ]
+
+    App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler:
+        tags: [ 'app.currency_rate_handler' ]
+
+    App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator:
+        arguments:
+            - '@app.currency_rate_coin_gate_http_client_decorator'
+
+    App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator:
+        arguments:
+            - '@app.currency_rate_coin_gecko_http_client_decorator'
+
+    App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator:
+        arguments:
+            - '@app.currency_crypto_compare_gate_http_client_decorator'
