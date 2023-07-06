@@ -24,6 +24,9 @@ any message sent to it to display in a web interface. UI is available on http://
 2. `/api/subscribe` - sign an email. Emails are stored in simple txt file by path `system/emails.txt`. Project will create this file if it isn't created.
 3. `/api/sendEmails` - send the current rate to all subscribed users. Project read subscribed emails from `system/emails.txt` and send emails to with current rate to them
 
+# Architecture
+![](docs/architecture.jpg)
+
 # Tests
 1. Copy `.env.test` to `.env.test.local`. You can use variables without any changes to work by default.
 2. To run tests you can use command `docker-compose exec php-fpm bin/phpunit`
