@@ -1,0 +1,28 @@
+deptrac:
+    paths:
+        - ./src
+    exclude_files:
+        - '#.*test.*#'
+    layers:
+        # I did this layer linter in context of hw5, so layers still in progress...
+        - name: Presentation
+          collectors:
+            - type: className
+              regex: App\\Presentation
+
+        - name: Utils
+          collectors:
+            - type: className
+              regex: App\\Utils
+
+        - name: Repository
+          collectors:
+            - type: className
+              regex: App\\Repository
+    ruleset:
+      Presentation:
+        - Utils
+        - Repository
+      Repository:
+        - Utils
+      Utils: ~

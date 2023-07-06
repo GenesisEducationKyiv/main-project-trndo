@@ -30,6 +30,8 @@ jobs:
         run: vendor/bin/php-cs-fixer fix src --allow-risky=yes
       - name: PHP CS Fixer tests
         run: vendor/bin/php-cs-fixer fix tests --allow-risky=yes
+      - name: Deptrac
+        run: vendor/bin/deptrac analyse --config-file=deptrac.yaml
       - name: Psalm
         run: vendor/bin/psalm --show-info=true
       - name: Commit Changes

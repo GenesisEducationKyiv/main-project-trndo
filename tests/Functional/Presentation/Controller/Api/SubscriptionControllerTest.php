@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\Api;
+namespace App\Tests\Functional\Presentation\Controller\Api;
 
 use App\Tests\Functional\AbstractApiTestCase;
 use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
