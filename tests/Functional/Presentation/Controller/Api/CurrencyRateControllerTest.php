@@ -6,7 +6,6 @@ namespace App\Tests\Functional\Presentation\Controller\Api;
 
 use App\Tests\Functional\AbstractApiTestCase;
 use App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain;
-use phpDocumentor\Reflection\Types\Self_;
 use Symfony\Component\HttpFoundation\Response;
 
 class CurrencyRateControllerTest extends AbstractApiTestCase
