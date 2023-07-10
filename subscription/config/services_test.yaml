@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true
+
+    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
+        class: App\Utils\FileSystem\Writer\FileWriter
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
+        class: App\Utils\FileSystem\Reader\FileReader
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Tests\Functional\Utils\TestCurrencyClient: ~
+    App\Utils\Client\Currency\CurrencyClientInterface: '@App\Tests\Functional\Utils\TestCurrencyClient'
