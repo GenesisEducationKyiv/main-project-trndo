@@ -1,5 +1,5 @@
 # *Extra task hw1
-name: Linter
+name: Subscription Linter
 
 on: [push, pull_request]
 
@@ -8,15 +8,19 @@ permissions:
 
 jobs:
   lint:
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'subscription'
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: ['8.2']
-        dir: [ 'currency', 'subscription' ]
     steps:
       - uses: actions/checkout@v3
       - name: Copy .env.local
-        run: php -r "file_exists('.env') || copy('.env.test.local');"
+        run: php -r "file_exists('.env') || copy('.env', '.env.local');"
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
