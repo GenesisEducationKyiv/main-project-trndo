@@ -8,11 +8,15 @@ permissions:
 
 jobs:
   lint:
+    defaults:
+      run:
+        shell: bash
+        working-directory: currency
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: ['8.2']
-        dir: [ 'currency', 'subscription' ]
+#         dir: [ 'currency', 'subscription' ]
     steps:
       - uses: actions/checkout@v3
       - name: Copy .env.local
