@@ -6,7 +6,7 @@ namespace App\Utils\CurrencyRateComparator;
 
 interface CurrencyRateComparatorChainInterface
 {
-    public function compare(Currency $from, Currency $to): float;
+    public function execute(Currency $from, Currency $to): float;
 
     public function setNext(CurrencyRateComparatorChainInterface $next): CurrencyRateComparatorChainInterface;
 }

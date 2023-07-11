@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Utils\CurrencyRateComparator;
+namespace App\Tests\Functional\Utils;
 
 use App\Utils\CurrencyRateComparator\Currency;
 use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
@@ -16,7 +16,7 @@ class TestCurrencyRateComparatorChain implements CurrencyRateComparatorChainInte
     ) {
     }
 
-    public function compare(Currency $from, Currency $to): float
+    public function execute(Currency $from, Currency $to): float
     {
         return $this->expectedRate;
     }

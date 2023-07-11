@@ -6,6 +6,9 @@
 parameters:
     env: '%env(resolve:APP_ENV)%'
     default_email: 'no-replay@cryptorates.com'
+    coin_gate_host: '%env(resolve:COIN_GATE_HOST)%'
+    coin_gecko_host: '%env(resolve:COIN_GECKO_HOST)%'
+    crypto_compare_host: '%env(resolve:CRYPTO_COMPARE_HOST)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,57 +29,40 @@ services:
         resource: '../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
-        class: App\Utils\FileSystem\Writer\FileWriter
+    App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface:
+        class: App\Repository\Subscription\Command\TxtSubscriptionCommandRepository
         arguments:
             - "%kernel.project_dir%/system"
 
-    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
-        class: App\Utils\FileSystem\Reader\FileReader
+    App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface:
+        class: App\Repository\Subscription\Query\TxtSubscriptionQueryRepository
         arguments:
             - "%kernel.project_dir%/system"
-
-    # Decorator for HttpClientInterface
-    app.currency_rate_coin_gate_http_client_decorator:
-        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
-        arguments:
-            - '@http_client'
-            - '@monolog.logger.currency_provider_response'
-            - 'CoinGate - Response: '
-
-    # Decorator for HttpClientInterface
-    app.currency_rate_coin_gecko_http_client_decorator:
-        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
-        arguments:
-            - '@http_client'
-            - '@monolog.logger.currency_provider_response'
-            - 'CoinGecko - Response: '
-
-    # Decorator for HttpClientInterface
-    app.currency_crypto_compare_gate_http_client_decorator:
-        class: App\Utils\Http\Decorator\LoggerResponseWithMessageDecorator
-        arguments:
-            - '@http_client'
-            - '@monolog.logger.currency_provider_response'
-            - 'CryptoCompare - Response: '
 
     App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler:
-        tags: [ 'app.currency_rate_handler' ]
+        calls:
+            - setNext: ['@App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler']
 
     App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler:
-        tags: [ 'app.currency_rate_handler' ]
+        calls:
+            - setNext: [ '@App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler' ]
 
-    App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler:
-        tags: [ 'app.currency_rate_handler' ]
+    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler'
 
-    App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator:
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGateComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator
         arguments:
-            - '@app.currency_rate_coin_gate_http_client_decorator'
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'
 
-    App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator:
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGeckoComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator
         arguments:
-            - '@app.currency_rate_coin_gecko_http_client_decorator'
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'
 
-    App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator:
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCryptoCompareComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator
         arguments:
-            - '@app.currency_crypto_compare_gate_http_client_decorator'
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'

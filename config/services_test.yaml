@@ -4,18 +4,15 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true
 
-    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
-        class: App\Utils\FileSystem\Writer\FileWriter
+    App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface:
+        class: App\Repository\Subscription\Command\TxtSubscriptionCommandRepository
         arguments:
             - "%kernel.project_dir%/test_system"
 
-    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
-        class: App\Utils\FileSystem\Reader\FileReader
+    App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface:
+        class: App\Repository\Subscription\Query\TxtSubscriptionQueryRepository
         arguments:
             - "%kernel.project_dir%/test_system"
 
-    App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparator: ~
-    App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface: '@App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparator'
-
-    App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain: ~
-    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain'
+    App\Tests\Functional\Utils\TestCurrencyRateComparatorHandler: ~
+    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\TestCurrencyRateComparatorHandler'

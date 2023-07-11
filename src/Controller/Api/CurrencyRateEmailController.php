@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Repository\Subsciption\Query\QuerySubscriptionRepositoryInterface;
+use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Utils\CurrencyRateComparator\Currency;
 use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
 use App\Utils\Mail\Factory\PlainTextEmailMessageFactory;
@@ -24,9 +24,9 @@ class CurrencyRateEmailController
     }
 
     #[Route('/sendEmails', methods: 'POST')]
-    public function sendRates(QuerySubscriptionRepositoryInterface $queryRepository): JsonResponse
+    public function sendRates(SubscriptionQueryRepositoryInterface $queryRepository): JsonResponse
     {
-        $rate = $this->rateComparator->compare(Currency::BTC, Currency::UAH);
+        $rate = $this->rateComparator->execute(Currency::BTC, Currency::UAH);
         $subscribers = $queryRepository->getAll();
 
         if (empty($subscribers)) {

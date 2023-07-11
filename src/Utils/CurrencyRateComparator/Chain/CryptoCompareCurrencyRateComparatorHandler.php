@@ -13,19 +13,19 @@ class CryptoCompareCurrencyRateComparatorHandler extends AbstractCurrencyRateCom
 {
     public function __construct(
         private LoggerInterface $logger,
-        private CryptoCompareCurrencyRateComparator $coinGateComparator
+        private CryptoCompareCurrencyRateComparator $cryptoCompareComparator
     ) {
     }
 
-    public function compare(Currency $from, Currency $to): float
+    public function execute(Currency $from, Currency $to): float
     {
         try {
-            $rate = $this->coinGateComparator->compare($from, $to);
+            $rate = $this->cryptoCompareComparator->compare($from, $to);
         } catch (ApiRequestException $exception) {
             $this->logger->info('Failed request to CryptoCompare provider. Message: '.$exception->getMessage());
-            $rate = parent::compare($from, $to);
+            $rate = $this->callNext($from, $to);
         }
 
-        return $rate ?? parent::compare($from, $to);
+        return $rate;
     }
 }

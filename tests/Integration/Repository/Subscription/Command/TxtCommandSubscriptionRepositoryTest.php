@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Repository\Subscription\Command;
 
-use App\Repository\Subsciption\Command\TxtCommandSubscriptionRepository;
-use App\Repository\Subsciption\Query\TxtQuerySubscriptionRepository;
+use App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface;
+use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Tests\Integration\AbstractFileSystemKernelTestCase;
 
 class TxtCommandSubscriptionRepositoryTest extends AbstractFileSystemKernelTestCase
@@ -14,10 +14,10 @@ class TxtCommandSubscriptionRepositoryTest extends AbstractFileSystemKernelTestC
     {
         $email = 'test_email@mail.com';
 
-        $txtSubscriptionPersister = self::getContainer()->get(TxtCommandSubscriptionRepository::class);
+        $txtSubscriptionPersister = self::getContainer()->get(SubscriptionCommandRepositoryInterface::class);
         $result = $txtSubscriptionPersister->store($email);
 
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertTrue($result);
         $this->assertSame([$email], $txtSubscriptionProvider->getAll());
@@ -27,12 +27,12 @@ class TxtCommandSubscriptionRepositoryTest extends AbstractFileSystemKernelTestC
     {
         $email = 'test_duplicate_email@mail.com';
 
-        $txtSubscriptionPersister = self::getContainer()->get(TxtCommandSubscriptionRepository::class);
+        $txtSubscriptionPersister = self::getContainer()->get(SubscriptionCommandRepositoryInterface::class);
         $txtSubscriptionPersister->store($email);
 
         $result = $txtSubscriptionPersister->store($email);
 
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertFalse($result);
         $this->assertSame([$email], $txtSubscriptionProvider->getAll());

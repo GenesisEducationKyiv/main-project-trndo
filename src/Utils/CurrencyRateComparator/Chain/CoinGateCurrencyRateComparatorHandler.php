@@ -17,15 +17,15 @@ class CoinGateCurrencyRateComparatorHandler extends AbstractCurrencyRateComparat
     ) {
     }
 
-    public function compare(Currency $from, Currency $to): float
+    public function execute(Currency $from, Currency $to): float
     {
         try {
             $rate = $this->coinGateComparator->compare($from, $to);
         } catch (ApiRequestException $exception) {
             $this->logger->info('Failed request to CoinGate provider. Message: '.$exception->getMessage());
-            $rate = parent::compare($from, $to);
+            $rate = $this->callNext($from, $to);
         }
 
-        return $rate ?? parent::compare($from, $to);
+        return $rate;
     }
 }
