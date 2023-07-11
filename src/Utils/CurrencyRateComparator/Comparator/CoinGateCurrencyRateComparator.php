@@ -27,13 +27,13 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
     public function compare(Currency $from, Currency $to): float
     {
         try {
+            $host = (string) $this->parameterBag->get('coin_gate_host');
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
-                sprintf(self::REQUEST_URL, $this->parameterBag->get('coin_gate_host'), $from->value, $to->value)
+                sprintf(self::REQUEST_URL, $host, $from->value, $to->value)
             );
 
             $result = json_decode($response->getContent(), true);
-
         } catch (\Throwable $e) {
             throw new ApiRequestException(message: $e->getMessage());
         }

@@ -30,9 +30,10 @@ class CoinGeckoCurrencyRateComparator implements CurrencyRateComparatorInterface
         $quotedCurrency = strtolower($to->value);
 
         try {
+            $host = (string) $this->parameterBag->get('coin_gecko_host');
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
-                sprintf(self::REQUEST_URL, $this->parameterBag->get('coin_gecko_host'),  $currencyId, $quotedCurrency)
+                sprintf(self::REQUEST_URL, $host, $currencyId, $quotedCurrency)
             );
 
             $result = json_decode($response->getContent(), true);
@@ -41,7 +42,7 @@ class CoinGeckoCurrencyRateComparator implements CurrencyRateComparatorInterface
         }
 
         $rate = $result[$currencyId][$quotedCurrency] ?? null;
-        if (!$rate) {
+        if ( ! $rate) {
             throw new ApiRequestException('Empty value CoinGecko from '.$currencyId.' to '.$quotedCurrency);
         }
 

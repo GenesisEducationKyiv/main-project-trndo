@@ -24,9 +24,10 @@ class CryptoCompareCurrencyRateComparator implements CurrencyRateComparatorInter
     public function compare(Currency $from, Currency $to): float
     {
         try {
+            $host = (string) $this->parameterBag->get('crypto_compare_host');
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
-                sprintf(self::REQUEST_URL, $this->parameterBag->get('crypto_compare_host'), $from->value, $to->value)
+                sprintf(self::REQUEST_URL, $host, $from->value, $to->value)
             );
 
             $result = json_decode($response->getContent(), true);
@@ -35,7 +36,7 @@ class CryptoCompareCurrencyRateComparator implements CurrencyRateComparatorInter
         }
 
         $rate = $result[$to->value] ?? null;
-        if (!$rate) {
+        if ( ! $rate) {
             throw new ApiRequestException('Empty value CryptoCompare from '.$from->value.' to '.$to->value);
         }
 
