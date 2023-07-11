@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Utils\CurrencyRateComparator\Currency;
-use App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface;
+use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
 use App\Utils\Mail\Factory\PlainTextEmailMessageFactory;
 use App\Utils\Mail\Sender\MailSenderInterface;
-use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,17 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CurrencyRateEmailController
 {
     public function __construct(
-        private CurrencyRateComparatorInterface $rateComparator,
+        private CurrencyRateComparatorChainInterface $rateComparator,
         private MailSenderInterface $mailSender,
         private PlainTextEmailMessageFactory $emailMessageFactory,
     ) {
     }
 
     #[Route('/sendEmails', methods: 'POST')]
-    public function sendRates(SubscriptionDataProviderInterface $dataProvider): JsonResponse
+    public function sendRates(SubscriptionQueryRepositoryInterface $queryRepository): JsonResponse
     {
-        $rate = $this->rateComparator->compare(Currency::BTC, Currency::UAH);
-        $subscribers = $dataProvider->getAll();
+        $rate = $this->rateComparator->execute(Currency::BTC, Currency::UAH);
+        $subscribers = $queryRepository->getAll();
 
         if (empty($subscribers)) {
             return new JsonResponse(

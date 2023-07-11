@@ -11,9 +11,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
+class CryptoCompareCurrencyRateComparator implements CurrencyRateComparatorInterface
 {
-    private const REQUEST_URL = '%s/api/v2/rates/merchant/%s/%s';
+    private const REQUEST_URL = '%s/data/price?fsym=%s&tsyms=%s';
 
     public function __construct(
         private HttpClientInterface $httpClient,
@@ -21,13 +21,10 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
     ) {
     }
 
-    /**
-     * @throws ApiRequestException
-     */
     public function compare(Currency $from, Currency $to): float
     {
         try {
-            $host = (string) $this->parameterBag->get('coin_gate_host');
+            $host = (string) $this->parameterBag->get('crypto_compare_host');
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
                 sprintf(self::REQUEST_URL, $host, $from->value, $to->value)
@@ -38,10 +35,11 @@ class CoinGateCurrencyRateComparator implements CurrencyRateComparatorInterface
             throw new ApiRequestException(message: $e->getMessage());
         }
 
-        if (empty($result)) {
-            throw new ApiRequestException('Empty value CoinGate from '.$from->value.' to '.$to->value);
+        $rate = $result[$to->value] ?? null;
+        if ( ! $rate) {
+            throw new ApiRequestException('Empty value CryptoCompare from '.$from->value.' to '.$to->value);
         }
 
-        return $result;
+        return $rate;
     }
 }

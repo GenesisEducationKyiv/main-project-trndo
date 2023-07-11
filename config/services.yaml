@@ -6,6 +6,9 @@
 parameters:
     env: '%env(resolve:APP_ENV)%'
     default_email: 'no-replay@cryptorates.com'
+    coin_gate_host: '%env(resolve:COIN_GATE_HOST)%'
+    coin_gecko_host: '%env(resolve:COIN_GECKO_HOST)%'
+    crypto_compare_host: '%env(resolve:CRYPTO_COMPARE_HOST)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,15 +29,40 @@ services:
         resource: '../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
-        class: App\Utils\FileSystem\Writer\FileWriter
+    App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface:
+        class: App\Repository\Subscription\Command\TxtSubscriptionCommandRepository
         arguments:
             - "%kernel.project_dir%/system"
 
-    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
-        class: App\Utils\FileSystem\Reader\FileReader
+    App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface:
+        class: App\Repository\Subscription\Query\TxtSubscriptionQueryRepository
         arguments:
             - "%kernel.project_dir%/system"
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler:
+        calls:
+            - setNext: ['@App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler']
+
+    App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler:
+        calls:
+            - setNext: [ '@App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler' ]
+
+    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler'
+
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGateComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator
+        arguments:
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'
+
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGeckoComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator
+        arguments:
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'
+
+    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCryptoCompareComparatorDecorator:
+        decorates: App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator
+        arguments:
+            - '@monolog.logger.currency_provider_response'
+            - '@.inner'

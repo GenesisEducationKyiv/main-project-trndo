@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Utils\CurrencyRateComparator\Currency;
-use App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface;
+use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,13 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class CurrencyRateController
 {
     public function __construct(
-        private CurrencyRateComparatorInterface $rateComparator
+        private CurrencyRateComparatorChainInterface $rateComparator
     ) {
     }
 
     #[Route('/rate')]
     public function getRates(): JsonResponse
     {
-        return new JsonResponse($this->rateComparator->compare(Currency::BTC, Currency::UAH));
+        return new JsonResponse($this->rateComparator->execute(Currency::BTC, Currency::UAH));
     }
 }

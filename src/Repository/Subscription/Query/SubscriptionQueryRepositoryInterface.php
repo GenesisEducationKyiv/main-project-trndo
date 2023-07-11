@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Utils\Subscription\DataProvider;
+namespace App\Repository\Subscription\Query;
 
-interface SubscriptionDataProviderInterface
+interface SubscriptionQueryRepositoryInterface
 {
     public function getAll(): array;
 
