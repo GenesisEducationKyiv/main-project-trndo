@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Functional\Presentation\Controller\Api;
+namespace App\Functional\Presentation\Controller\Api;
 
 use App\Tests\Functional\AbstractApiTestCase;
-use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +21,7 @@ class CurrencyRateEmailControllerTest extends AbstractApiTestCase
 
     public function testExpects404(): void
     {
-        $result = self::httpPost('/api/sendEmails', ['emai']);
+        $result = self::httpPost('/api/sendEmails', []);
 
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
         $this->assertSame(['message' => 'Emails were not found!'], json_decode($result, true));
@@ -40,7 +39,8 @@ class CurrencyRateEmailControllerTest extends AbstractApiTestCase
 
     private function loadEmailsToFile(): void
     {
-        $fileWriter = self::getContainer()->get(FileSystemWriterInterface::class);
-        $fileWriter->writeTo('emails.txt', implode(',', self::EMAILS));
+        $dir = self::$kernel->getProjectDir();
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($dir.'/test_system/emails.txt', implode(',', self::EMAILS));
     }
 }

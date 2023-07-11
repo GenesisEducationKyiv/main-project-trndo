@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller\Api;
 
-use App\Repository\Subsciption\Command\CommandSubscriptionRepositoryInterface;
+use App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SubscriptionController
 {
     public function __construct(
-        private CommandSubscriptionRepositoryInterface $commandRepository,
+        private SubscriptionCommandRepositoryInterface $commandRepository,
     ) {
     }
 

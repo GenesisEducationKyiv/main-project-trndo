@@ -11,6 +11,7 @@ use App\Utils\CurrencyRateComparator\Currency;
 use App\Utils\CurrencyRateComparator\CurrencyRateComparatorInterface;
 use App\Utils\Exception\ApiRequestException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,12 @@ class CurrencyRateComparatorTest extends TestCase
 {
     protected MockHttpClient $httpClient;
 
+    protected ParameterBagInterface $parameterBag;
+
     protected function setUp(): void
     {
         $this->httpClient = new MockHttpClient();
+        $this->parameterBag = $this->createMock(ParameterBagInterface::class);
     }
 
     /**
@@ -30,20 +34,6 @@ class CurrencyRateComparatorTest extends TestCase
     public function testCompareReturnsFloatRate(string $comparator, MockResponse $mockResponse, float $rate): void
     {
         $rateComparator = $this->createComparator($comparator, $mockResponse);
-
-        $result = $rateComparator->compare(Currency::BTC, Currency::UAH);
-
-        self::assertSame($rate, $result);
-    }
-
-    /**
-     * @dataProvider provideCurrencyComparatorService
-     */
-    public function testCompareReturnsNullRate(string $comparator): void
-    {
-        $rate = null;
-
-        $rateComparator = $this->createComparator($comparator, new MockResponse(json_encode($rate)));
 
         $result = $rateComparator->compare(Currency::BTC, Currency::UAH);
 
@@ -72,7 +62,7 @@ class CurrencyRateComparatorTest extends TestCase
             $this->httpClient->setResponseFactory($response);
         }
 
-        return new $comparatorClass($this->httpClient);
+        return new $comparatorClass($this->httpClient, $this->parameterBag);
     }
 
     private function provideCurrencyComparatorService(): iterable

@@ -4,5 +4,5 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true
 
-    App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain: ~
-    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\CurrencyRateComparator\TestCurrencyRateComparatorChain'
+    App\Tests\Functional\Utils\TestCurrencyRateComparatorChain: ~
+    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\TestCurrencyRateComparatorChain'

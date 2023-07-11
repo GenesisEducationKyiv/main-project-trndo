@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller\Api;
 
-use App\Repository\Subsciption\Query\QuerySubscriptionRepositoryInterface;
+use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Utils\Client\Currency\CurrencyClientInterface;
 use App\Utils\Mail\Factory\PlainTextEmailMessageFactory;
 use App\Utils\Mail\Sender\MailSenderInterface;
@@ -23,7 +23,7 @@ class CurrencyRateEmailController
     }
 
     #[Route('/sendEmails', methods: 'POST')]
-    public function sendRates(QuerySubscriptionRepositoryInterface $queryRepository): JsonResponse
+    public function sendRates(SubscriptionQueryRepositoryInterface $queryRepository): JsonResponse
     {
         $rate = $this->rateClient->getRate();
         $subscribers = $queryRepository->getAll();

@@ -37,7 +37,7 @@ class CurrencyRateComparatorChainTest extends TestCase
         $nextComparatorMock = $this->createMock(AbstractCurrencyRateComparatorHandler::class);
         $handler->setNext($nextComparatorMock);
 
-        $result = $handler->compare(Currency::BTC, Currency::UAH);
+        $result = $handler->execute(Currency::BTC, Currency::UAH);
 
         $this->assertSame($rate, $result);
     }
@@ -58,10 +58,10 @@ class CurrencyRateComparatorChainTest extends TestCase
         $handler = new $chain($this->logger, $coinGateComparatorMock);
 
         $nextComparatorMock = $this->createMock(AbstractCurrencyRateComparatorHandler::class);
-        $nextComparatorMock->expects($this->once())->method('compare')->willReturn($rate);
+        $nextComparatorMock->expects($this->once())->method('execute')->willReturn($rate);
         $handler->setNext($nextComparatorMock);
 
-        $result = $handler->compare(Currency::BTC, Currency::UAH);
+        $result = $handler->execute(Currency::BTC, Currency::UAH);
 
         $this->assertSame($rate, $result);
     }
@@ -80,7 +80,7 @@ class CurrencyRateComparatorChainTest extends TestCase
         $handler = new $chain($this->logger, $coinGateComparatorMock);
         $this->expectException(ApiRequestException::class);
 
-        $handler->compare(Currency::BTC, Currency::UAH);
+        $handler->execute(Currency::BTC, Currency::UAH);
     }
 
     private function provideCurrencyComparatorChainService(): iterable

@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         php-versions: ['8.2']
+        dir: [ 'currency', 'subscription' ]
     steps:
       - uses: actions/checkout@v3
       - name: Copy .env.local
