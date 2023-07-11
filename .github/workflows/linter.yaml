@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Copy .env.local
-        run: php -r "file_exists('.env') || copy('.env.test.local');"
+        run: php -r "file_exists('.env') || copy('.env', '.env.local');"
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
