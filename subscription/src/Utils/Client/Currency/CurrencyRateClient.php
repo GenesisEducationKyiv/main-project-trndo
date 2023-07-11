@@ -27,7 +27,7 @@ class CurrencyRateClient implements CurrencyClientInterface
         try {
             $response = $this->httpClient->request(
                 Request::METHOD_GET,
-                sprintf(self::RATE_URI, (string)$this->parameterBag->get('currency_service_host')),
+                sprintf(self::RATE_URI, (string) $this->parameterBag->get('currency_service_host')),
             );
 
             $rate = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
