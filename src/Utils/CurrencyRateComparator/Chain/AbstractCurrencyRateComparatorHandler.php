@@ -12,13 +12,9 @@ abstract class AbstractCurrencyRateComparatorHandler implements CurrencyRateComp
 {
     protected ?CurrencyRateComparatorChainInterface $next = null;
 
-    public function compare(Currency $from, Currency $to): float
+    public function execute(Currency $from, Currency $to): float
     {
-        if ( ! $this->next) {
-            throw new ApiRequestException('Failed to fetch currency rate');
-        }
-
-        return $this->next->compare($from, $to);
+        return $this->callNext($from, $to);
     }
 
     public function setNext(CurrencyRateComparatorChainInterface $next): CurrencyRateComparatorChainInterface
@@ -26,5 +22,14 @@ abstract class AbstractCurrencyRateComparatorHandler implements CurrencyRateComp
         $this->next = $next;
 
         return $next;
+    }
+
+    protected function callNext(Currency $from, Currency $to): float
+    {
+        if ( ! $this->next) {
+            throw new ApiRequestException('Failed to fetch currency rate');
+        }
+
+        return $this->next->execute($from, $to);
     }
 }

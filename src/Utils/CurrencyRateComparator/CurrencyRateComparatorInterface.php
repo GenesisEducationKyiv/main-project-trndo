@@ -6,5 +6,5 @@ namespace App\Utils\CurrencyRateComparator;
 
 interface CurrencyRateComparatorInterface
 {
-    public function compare(Currency $from, Currency $to): ?float;
+    public function compare(Currency $from, Currency $to): float;
 }

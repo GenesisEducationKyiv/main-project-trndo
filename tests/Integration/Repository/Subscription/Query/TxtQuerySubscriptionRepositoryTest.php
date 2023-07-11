@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Repository\Subscription\Query;
 
-use App\Repository\Subsciption\Query\TxtQuerySubscriptionRepository;
+use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Tests\Integration\AbstractFileSystemKernelTestCase;
-use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class TxtQuerySubscriptionRepositoryTest extends AbstractFileSystemKernelTestCase
 {
@@ -17,7 +17,7 @@ class TxtQuerySubscriptionRepositoryTest extends AbstractFileSystemKernelTestCas
         $email = 'test_email@mail.com';
         $this->addEmailToFile($email);
 
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertSame([$email], $txtSubscriptionProvider->getAll());
     }
@@ -27,7 +27,7 @@ class TxtQuerySubscriptionRepositoryTest extends AbstractFileSystemKernelTestCas
         $email = 'test_existing_email@mail.com';
         $this->addEmailToFile($email);
 
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertTrue($txtSubscriptionProvider->emailExists($email));
     }
@@ -36,21 +36,22 @@ class TxtQuerySubscriptionRepositoryTest extends AbstractFileSystemKernelTestCas
     {
         $email = 'non_existing_email@mail.com';
 
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertFalse($txtSubscriptionProvider->emailExists($email));
     }
 
     public function testReadSubscriptionDataFromNotExistingFile(): void
     {
-        $txtSubscriptionProvider = self::getContainer()->get(TxtQuerySubscriptionRepository::class);
+        $txtSubscriptionProvider = self::getContainer()->get(SubscriptionQueryRepositoryInterface::class);
 
         $this->assertSame([], $txtSubscriptionProvider->getAll());
     }
 
     private function addEmailToFile(string $email): void
     {
-        $fileWriter = self::getContainer()->get(FileSystemWriterInterface::class);
-        $fileWriter->writeTo(self::FILE_NAME, $email);
+        $dir = self::$kernel->getProjectDir();
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($dir.'/test_system/emails.txt', $email);
     }
 }
