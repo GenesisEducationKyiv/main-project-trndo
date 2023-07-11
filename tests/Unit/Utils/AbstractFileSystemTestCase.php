@@ -23,4 +23,9 @@ class AbstractFileSystemTestCase extends TestCase
     {
         $this->filesystem->remove($this->tempDirectory);
     }
+
+    protected function getFullFilePath(string $fileName): string
+    {
+        return $this->tempDirectory.'/'.$fileName;
+    }
 }

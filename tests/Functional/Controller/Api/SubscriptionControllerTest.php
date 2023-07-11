@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller\Api;
 
 use App\Tests\Functional\AbstractApiTestCase;
-use App\Utils\FileSystem\FileWriter;
+use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,7 +50,7 @@ class SubscriptionControllerTest extends AbstractApiTestCase
 
     private function addEmailsToFile(array $emails): void
     {
-        $fileWriter = self::getContainer()->get(FileWriter::class);
+        $fileWriter = self::getContainer()->get(FileSystemWriterInterface::class);
         $fileWriter->writeTo('emails.txt', implode(',', $emails));
     }
 }

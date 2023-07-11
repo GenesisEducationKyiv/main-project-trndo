@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Utils\Subscription\Persister;
 
-use App\Utils\FileSystem\FileWriter;
+use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
 use App\Utils\Subscription\DataProvider\SubscriptionDataProviderInterface;
 
 class TxtSubscriptionDataPersister implements SubscriptionDataPersisterInterface
 {
     public function __construct(
-        private FileWriter $fileWriter,
+        private FileSystemWriterInterface $fileWriter,
         private SubscriptionDataProviderInterface $dataProvider
     ) {
     }

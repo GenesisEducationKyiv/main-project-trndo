@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Utils\FileSystem;
 
 use App\Tests\Unit\Utils\AbstractFileSystemTestCase;
-use App\Utils\FileSystem\FileReader;
-use Psr\Log\LoggerInterface;
+use App\Utils\FileSystem\Reader\FileReader;
 
 class FileReaderTest extends AbstractFileSystemTestCase
 {
     private FileReader $fileReader;
-    private LoggerInterface $logger;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->fileReader = new FileReader($this->tempDirectory, $this->filesystem, $this->logger);
+        $this->fileReader = new FileReader($this->tempDirectory, $this->filesystem);
         $this->filesystem->mkdir($this->tempDirectory);
     }
 

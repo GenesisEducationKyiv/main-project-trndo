@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Utils\Subscription\DataProvider;
 
-use App\Utils\FileSystem\FileReader;
+use App\Utils\FileSystem\Reader\FileSystemReaderInterface;
 
 class TxtSubscriptionDataProvider implements SubscriptionDataProviderInterface
 {
     public function __construct(
-        private FileReader $fileReader,
+        private FileSystemReaderInterface $fileReader,
     ) {
     }
 

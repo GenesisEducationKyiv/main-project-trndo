@@ -26,11 +26,13 @@ services:
         resource: '../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Utils\FileSystem\FileWriter:
+    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
+        class: App\Utils\FileSystem\Writer\FileWriter
         arguments:
             - "%kernel.project_dir%/system"
 
-    App\Utils\FileSystem\FileReader:
+    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
+        class: App\Utils\FileSystem\Reader\FileReader
         arguments:
             - "%kernel.project_dir%/system"
 

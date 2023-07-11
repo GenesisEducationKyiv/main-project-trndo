@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Utils\FileSystem;
+namespace App\Utils\FileSystem\Writer;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class FileWriter
+class FileWriter implements FileSystemWriterInterface
 {
     public function __construct(
         private readonly string $directory,

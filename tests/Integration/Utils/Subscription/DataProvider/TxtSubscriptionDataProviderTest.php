@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Utils\Subscription\DataProvider;
 
 use App\Tests\Integration\AbstractFileSystemKernelTestCase;
-use App\Utils\FileSystem\FileWriter;
+use App\Utils\FileSystem\Writer\FileSystemWriterInterface;
 use App\Utils\Subscription\DataProvider\TxtSubscriptionDataProvider;
 
 class TxtSubscriptionDataProviderTest extends AbstractFileSystemKernelTestCase
@@ -50,7 +50,7 @@ class TxtSubscriptionDataProviderTest extends AbstractFileSystemKernelTestCase
 
     private function addEmailToFile(string $email): void
     {
-        $fileWriter = self::getContainer()->get(FileWriter::class);
+        $fileWriter = self::getContainer()->get(FileSystemWriterInterface::class);
         $fileWriter->writeTo(self::FILE_NAME, $email);
     }
 }
