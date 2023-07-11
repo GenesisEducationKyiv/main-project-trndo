@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Presentation\Controller\Api;
 
 use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use App\Utils\CurrencyRateComparator\Currency;
