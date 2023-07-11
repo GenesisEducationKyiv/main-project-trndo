@@ -25,7 +25,7 @@ any message sent to it to display in a web interface. UI is available on http://
 3. `/api/sendEmails` - send the current rate to all subscribed users. Project read subscribed emails from `system/emails.txt` and send emails to with current rate to them
 
 # Architecture
-![](docs/architecture.jpg)
+![](docs/architecture.png)
 
 # Tests
 1. Copy `.env.test` to `.env.test.local`. You can use variables without any changes to work by default.
