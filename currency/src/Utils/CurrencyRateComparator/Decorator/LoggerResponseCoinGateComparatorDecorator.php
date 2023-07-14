@@ -6,6 +6,7 @@ namespace App\Utils\CurrencyRateComparator\Comparator\Decorator;
 
 use App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator;
 use App\Utils\CurrencyRateComparator\Currency;
+use App\Utils\Logger\CustomLoggerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -13,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class LoggerResponseCoinGateComparatorDecorator extends CoinGateCurrencyRateComparator
 {
     public function __construct(
-        private LoggerInterface $logger,
+        private LoggerInterface|CustomLoggerInterface $logger,
         private CoinGateCurrencyRateComparator $currencyRateComparator,
         private HttpClientInterface $httpClient,
         private ParameterBagInterface $parameterBag,
