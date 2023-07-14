@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class LoggerMessageHandler
 {
-    //*display logs in stdout according to task
+    // *display logs in stdout according to task
     public function __invoke(LoggerMessage $message): void
     {
         $string = 'From Handler: '.$message->getChannel().': Message: '.$message->getMessage()

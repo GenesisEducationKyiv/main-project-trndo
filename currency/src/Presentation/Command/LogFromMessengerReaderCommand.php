@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Presentation\Command;
 
 use App\Message\LoggerMessage;
-use Generator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 
-#[AsCommand(name: 'app:get-logs' )]
+#[AsCommand(name: 'app:get-logs')]
 class LogFromMessengerReaderCommand extends Command
 {
     private bool $stop = false;
@@ -25,11 +24,11 @@ class LogFromMessengerReaderCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        while (!$this->stop) {
-            /** @var Generator $message */
+        while ( ! $this->stop) {
+            /** @var \Generator $message */
             $message = $this->transport->get();
 
-            if (!$message->valid()) {
+            if ( ! $message->valid()) {
                 $this->stop = false;
                 break;
             }
