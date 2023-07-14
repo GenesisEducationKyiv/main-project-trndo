@@ -28,6 +28,16 @@ any message sent to it to display in a web interface. UI is available on http://
 2. `/api/subscribe` - sign an email. Emails are stored in simple txt file by path `system/emails.txt`. Project will create this file if it isn't created.
 3. `/api/sendEmails` - send the current rate to all subscribed users. Project read subscribed emails from `system/emails.txt` and send emails to with current rate to them
 
+# Commands
+ You can run following commands to get logs
+1. Symfony messenger commands: 
+- `docker-compose exec currency-php-fpm bin/console messenger:consume rabbitmq_logs` - default logs channel
+- `docker-compose exec currency-php-fpm bin/console messenger:consume rabbitmq_error_logs` - error logs channel
+
+2. Custom commands:
+- `docker-compose exec currency-php-fpm bin/console messenger:consume app:get-logs`- default logs channel list
+- `docker-compose exec currency-php-fpm bin/console messenger:consume app:get-error-logs`- error logs channel list
+
 # Architecture
 ![](docs/architecture.png)
 

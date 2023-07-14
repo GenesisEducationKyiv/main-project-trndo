@@ -7,6 +7,8 @@ services:
       dockerfile: ../docker/fpm/Dockerfile
     volumes:
       - ./currency:/usr/src/app
+    networks:
+      - rabbitmq_message_bus
 
   currency-nginx:
     build:
@@ -18,6 +20,8 @@ services:
       - 4505:80
     depends_on:
       - currency-php-fpm
+    networks:
+      - rabbitmq_message_bus
 
   #subscription service
   subscription-php-fpm:
@@ -26,6 +30,8 @@ services:
       dockerfile: ../docker/fpm/Dockerfile
     volumes:
       - ./subscription:/usr/src/app
+    networks:
+      - rabbitmq_message_bus
 
   subscription-nginx:
     build:
@@ -37,6 +43,15 @@ services:
       - 4507:80
     depends_on:
       - subscription-php-fpm
+    networks:
+      - rabbitmq_message_bus
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - rabbitmq_message_bus
+    ports:
+      - "15072:15672"
 
   #smtp service
   mailer:
@@ -44,3 +59,7 @@ services:
     ports:
       - 1025
       - 32770:1080
+
+networks:
+  rabbitmq_message_bus:
+    external: true
