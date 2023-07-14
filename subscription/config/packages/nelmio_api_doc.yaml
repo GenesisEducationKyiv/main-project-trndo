@@ -39,19 +39,20 @@ nelmio_api_doc:
                         '409':
                             description: Повертати, якщо e-mail вже є в базі даних (файловій)
                             content: { }
-            /subscribers:
-                get:
+            /sendEmails:
+                post:
                     tags:
                         - subscription
-                    summary: Отримати підписаних користувачів
-                    operationId: subscribers
+                    summary: Відправити e-mail з поточним курсом на всі підписані електронні пошти.
+                    description: >-
+                        Запит має отримувати актуальний курс BTC до UAH за допомогою third-party
+                        сервісу та відправляти його на всі електронні адреси, які були підписані
+                        раніше.
+                    operationId: sendEmails
                     responses:
                         '200':
-                            description: Повертається актуальний срисок користувачів
-                            content:
-                                application/json:
-                                    schema:
-                                        type: object
+                            description: E-mailʼи відправлено
+                            content: { }
 
         components: { }
 

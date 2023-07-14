@@ -27,12 +27,22 @@ services:
         resource: '../src/Presentation/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
-        class: App\Utils\FileSystem\Writer\FileWriter
+#    App\Utils\FileSystem\Writer\FileSystemWriterInterface:
+#        class: App\Utils\FileSystem\Writer\FileWriter
+#        arguments:
+#            - "%kernel.project_dir%/system"
+#
+#    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
+#        class: App\Utils\FileSystem\Reader\FileReader
+#        arguments:
+#            - "%kernel.project_dir%/system"
+
+    App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface:
+        class: App\Repository\Subscription\Command\TxtSubscriptionCommandRepository
         arguments:
             - "%kernel.project_dir%/system"
 
-    App\Utils\FileSystem\Reader\FileSystemReaderInterface:
-        class: App\Utils\FileSystem\Reader\FileReader
+    App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface:
+        class: App\Repository\Subscription\Query\TxtSubscriptionQueryRepository
         arguments:
             - "%kernel.project_dir%/system"
