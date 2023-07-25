@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\CurrencyRateComparator\Chain;
 
-use App\Domain\Dictionary\Currency;
 use App\Application\Logger\CustomLoggerInterface;
+use App\Domain\Dictionary\Currency;
 use App\Infrastructure\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator;
 use App\Infrastructure\Exception\ApiRequestException;
 use Psr\Log\LoggerInterface;
