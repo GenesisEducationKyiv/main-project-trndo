@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller\Api;
 
-use App\Utils\CurrencyRateComparator\Currency;
-use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
+use App\Application\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
+use App\Domain\Dictionary\Currency;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 

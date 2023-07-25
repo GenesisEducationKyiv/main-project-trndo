@@ -28,40 +28,40 @@ services:
         resource: '../src/Presentation/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler:
+    App\Infrastructure\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler:
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
         calls:
-            - setNext: ['@App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler']
+            - setNext: ['@App\Infrastructure\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler']
 
-    App\Utils\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler:
+    App\Infrastructure\CurrencyRateComparator\Chain\CoinGeckoCurrencyRateComparatorHandler:
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
         calls:
-            - setNext: [ '@App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler' ]
+            - setNext: [ '@App\Infrastructure\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler' ]
 
-    App\Utils\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler:
+    App\Infrastructure\CurrencyRateComparator\Chain\CryptoCompareCurrencyRateComparatorHandler:
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
 
-    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Utils\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler'
+    App\Application\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Infrastructure\CurrencyRateComparator\Chain\CoinGateCurrencyRateComparatorHandler'
 
-    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGateComparatorDecorator:
-        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator
+    App\Infrastructure\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGateComparatorDecorator:
+        decorates: App\Infrastructure\CurrencyRateComparator\Comparator\CoinGateCurrencyRateComparator
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
             - '@.inner'
 
-    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGeckoComparatorDecorator:
-        decorates: App\Utils\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator
+    App\Infrastructure\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCoinGeckoComparatorDecorator:
+        decorates: App\Infrastructure\CurrencyRateComparator\Comparator\CoinGeckoCurrencyRateComparator
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
             - '@.inner'
 
-    App\Utils\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCryptoCompareComparatorDecorator:
-        decorates: App\Utils\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator
+    App\Infrastructure\CurrencyRateComparator\Comparator\Decorator\LoggerResponseCryptoCompareComparatorDecorator:
+        decorates: App\Infrastructure\CurrencyRateComparator\Comparator\CryptoCompareCurrencyRateComparator
         arguments:
-            - '@App\Utils\Logger\CustomLoggerInterface'
+            - '@App\Application\Logger\CustomLoggerInterface'
             - '@.inner'
 
     App\Presentation\Command\LogFromMessengerReaderCommand:

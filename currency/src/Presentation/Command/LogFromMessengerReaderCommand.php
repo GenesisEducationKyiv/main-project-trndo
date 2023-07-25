@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Command;
 
-use App\Message\LoggerMessage;
+use App\Domain\Message\LoggerMessage;
 use Generator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

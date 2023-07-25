@@ -5,4 +5,4 @@ services:
         autoconfigure: true
 
     App\Tests\Functional\Utils\TestCurrencyRateComparatorChain: ~
-    App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\TestCurrencyRateComparatorChain'
+    App\Application\CurrencyRateComparator\CurrencyRateComparatorChainInterface: '@App\Tests\Functional\Utils\TestCurrencyRateComparatorChain'

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Utils;
 
-use App\Utils\CurrencyRateComparator\Currency;
-use App\Utils\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
+
+use App\Application\CurrencyRateComparator\CurrencyRateComparatorChainInterface;
+use App\Domain\Dictionary\Currency;
 
 class TestCurrencyRateComparatorChain implements CurrencyRateComparatorChainInterface
 {
