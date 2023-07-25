@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller\Api;
 
-use App\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
-use App\Utils\Client\Currency\CurrencyClientInterface;
-use App\Utils\Mail\Factory\PlainTextEmailMessageFactory;
-use App\Utils\Mail\Sender\MailSenderInterface;
+use App\Application\Client\Currency\CurrencyClientInterface;
+use App\Application\Mail\Factory\PlainTextEmailMessageFactory;
+use App\Application\Mail\Sender\MailSenderInterface;
+use App\Domain\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

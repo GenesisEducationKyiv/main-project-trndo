@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Utils;
 
-use App\Utils\Client\Currency\CurrencyClientInterface;
+use App\Application\Client\Currency\CurrencyClientInterface;
 
 class TestCurrencyClient implements CurrencyClientInterface
 {

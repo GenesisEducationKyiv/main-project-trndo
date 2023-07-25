@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Controller\Api;
 
-use App\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface;
+use App\Domain\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
