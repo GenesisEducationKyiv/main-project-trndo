@@ -1,0 +1,36 @@
+nelmio_api_doc:
+    models: { use_jms: false }
+    documentation:
+        info:
+            title: GSES2 BTC currency application
+            version: 1.0.0
+        servers:
+            - url: /api
+        tags:
+            - name: rate
+              description: Отримання поточного курсу BTC до UAH
+        paths:
+            /rate:
+                get:
+                    tags:
+                        - rate
+                    summary: Отримати поточний курс BTC до UAH
+                    description: >-
+                        Запит має повертати поточний курс BTC до UAH використовуючи будь-який
+                        third party сервіс з публічним АРІ
+                    operationId: rate
+                    responses:
+                        '200':
+                            description: Повертається актуальний курс BTC до UAH
+                            content:
+                                application/json:
+                                    schema:
+                                        type: number
+                        '400':
+                            description: Invalid status value
+                            content: { }
+        components: { }
+
+    areas: # to filter documented areas
+        default:
+            disable_default_routes: true

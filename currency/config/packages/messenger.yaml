@@ -1,0 +1,37 @@
+framework:
+    messenger:
+
+        transports:
+            rabbitmq_logs:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: rabbitmq
+                        type: direct
+                        default_publish_routing_key: info
+                    queues:
+                        rabbitmq_logs:
+                            binding_keys: ['info']
+
+            rabbitmq_error_logs:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: rabbitmq
+                        type: direct
+                        default_publish_routing_key: error
+                    queues:
+                        rabbitmq_error_logs:
+                            binding_keys: ['error']
+
+        routing:
+            # Route your messages to the transports
+            'App\Domain\Message\LoggerMessage': rabbitmq_logs
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+                async: 'in-memory://'

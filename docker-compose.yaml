@@ -1,22 +1,65 @@
 services:
-    php-fpm:
-        build:
-          context: .
-          dockerfile: docker/fpm/Dockerfile
-        volumes:
-          - ./:/usr/src/app
-    nginx:
-        build:
-          context: .
-          dockerfile: docker/nginx/Dockerfile
-        volumes:
-          - ./:/usr/src/app
-        ports:
-          - 4501:80
-        depends_on:
-          - php-fpm
-    mailer:
-        image: schickling/mailcatcher
-        ports:
-          - 1025
-          - 32770:1080
+
+  #currency service
+  currency-php-fpm:
+    build:
+      context: currency
+      dockerfile: ../docker/fpm/Dockerfile
+    volumes:
+      - ./currency:/usr/src/app
+    networks:
+      - rabbitmq_message_bus
+
+  currency-nginx:
+    build:
+      context: currency
+      dockerfile: ../docker/nginx/Dockerfile
+    volumes:
+      - ./currency:/usr/src/app
+    ports:
+      - 4505:80
+    depends_on:
+      - currency-php-fpm
+    networks:
+      - rabbitmq_message_bus
+
+  #subscription service
+  subscription-php-fpm:
+    build:
+      context: subscription
+      dockerfile: ../docker/fpm/Dockerfile
+    volumes:
+      - ./subscription:/usr/src/app
+    networks:
+      - rabbitmq_message_bus
+
+  subscription-nginx:
+    build:
+      context: subscription
+      dockerfile: ../docker/nginx/Dockerfile
+    volumes:
+      - ./subscription:/usr/src/app
+    ports:
+      - 4507:80
+    depends_on:
+      - subscription-php-fpm
+    networks:
+      - rabbitmq_message_bus
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - rabbitmq_message_bus
+    ports:
+      - "15072:15672"
+
+  #smtp service
+  mailer:
+    image: schickling/mailcatcher
+    ports:
+      - 1025
+      - 32770:1080
+
+networks:
+  rabbitmq_message_bus:
+    external: true

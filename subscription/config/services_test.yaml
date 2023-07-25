@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true
+
+    App\Domain\Repository\Subscription\Command\SubscriptionCommandRepositoryInterface:
+        class: App\Infrastructure\Repository\Subscription\Command\TxtSubscriptionCommandRepository
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Domain\Repository\Subscription\Query\SubscriptionQueryRepositoryInterface:
+        class: App\Infrastructure\Repository\Subscription\Query\TxtSubscriptionQueryRepository
+        arguments:
+            - "%kernel.project_dir%/test_system"
+
+    App\Tests\Functional\Utils\TestCurrencyClient: ~
+    App\Application\Client\Currency\CurrencyClientInterface: '@App\Tests\Functional\Utils\TestCurrencyClient'
